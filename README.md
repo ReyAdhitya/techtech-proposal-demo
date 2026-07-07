@@ -1,12 +1,13 @@
-<<<<<<< HEAD
-# Tech Tech Technology - AI Course Proposal Engine
+# Tech Tech Technology - AI Course Proposal Engine (public demo)
 
 An AI agent prototype that turns a school's **quotation-invitation email** into a
 complete, costed **course proposal** in seconds — built for
 [Tech Tech Technology](https://techtechtechnology.com), a Hong Kong education
 company that runs MatataLab coding-robot courses for schools and kindergartens.
 
-> **Live demo:** https://techtech-mu.vercel.app
+This is a **public, no-login copy** for open demo access.
+
+> **Live demo:** https://techtech-public-e07gp3evy-reys-projects-3a73006b.vercel.app
 
 ---
 
@@ -25,10 +26,9 @@ AI models to run and the output language, then the system:
 
 1. **Reads the email** and extracts the requirements — course topic, age group,
    number of students, number of lessons, equipment already owned, etc.
-2. **Runs several AI agents in parallel** — each a *different* AI model
-   (GPT-4o, Gemini, DeepSeek, Perplexity). They don't split the job; **each one
-   independently designs the whole course** so we get genuinely different ideas
-   to compare.
+2. **Runs several AI agents in parallel** — each a *different* AI model. They
+   don't split the job; **each one independently designs the whole course** so
+   we get genuinely different ideas to compare.
 3. **Searches the live web** for the required materials, finding **multiple
    vendors per item** so the cheapest reputable option can be chosen.
 4. **Merges the best ideas** from all agents into one final proposal and picks
@@ -66,7 +66,6 @@ showing each AI's choices and reasoning.
 ## Controls
 
 - **AI agents** — tick any combination of models (each a different "opinion").
-  Perplexity Sonar is the web-search specialist; the others are fast all-rounders.
 - **Tutor pay (HKD/hour)** — leave blank to let the AI estimate, or fill in your
   own rate.
 - **Output language** — English · 繁體中文 · Bilingual.
@@ -137,9 +136,13 @@ lib/schemas.ts             typed shapes for every stage (zod)
 scripts/*.mjs              model health-check probes
 ```
 
+## About this copy
+
+This repo is a **public, unauthenticated** version of the main internal tool —
+no login of any kind, open for anyone with the link. There is no per-user access
+control, so treat the demo link as something to share intentionally rather than
+post publicly (API usage is billed to a shared, capped key).
+
 ---
 
 *Prototype built as an internship / work project at Tech Tech Technology.*
-=======
-# cost_estimator
->>>>>>> d88792b4f419ce21e85c137cbfa0edcaf06bf87a
