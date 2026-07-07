@@ -1,0 +1,484 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ tokens */
+:root {
+  --paper: #f4f3f0; /* app ground — warm, but not cream */
+  --surface: #ffffff; /* cards */
+  --surface-2: #faf9f6; /* inset panels */
+  --ink: #1b1815; /* warm near-black text */
+  --ink-2: #524c44; /* secondary text */
+  --muted: #8c867c; /* tertiary text */
+  --line: #e7e3db; /* borders */
+  --line-2: #efece5; /* faint borders */
+
+  --accent: #e57a10; /* marigold — the one bold colour */
+  --accent-strong: #c0620a;
+  --accent-ink: #7c3d05; /* accent text on light */
+  --accent-wash: #fbefdd; /* set below via mix; kept as tint */
+  --accent-wash: #fcefdf;
+
+  --good: #0f7d5b; /* profit / success */
+  --good-wash: #e6f3ed;
+  --info: #356a9c; /* search / info */
+  --info-wash: #e9f0f7;
+  --bad: #c0392b; /* error */
+  --bad-wash: #fbeae7;
+
+  --console: #211d19; /* dark bar / hero */
+  --console-2: #2c2721;
+  --console-ink: #f1ece4;
+  --console-muted: #a79d90;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+
+  --shadow-sm: 0 1px 2px rgba(27, 22, 16, 0.05), 0 1px 1px rgba(27, 22, 16, 0.04);
+  --shadow: 0 6px 22px -8px rgba(27, 22, 16, 0.12), 0 2px 6px -2px rgba(27, 22, 16, 0.06);
+  --shadow-lg: 0 28px 60px -18px rgba(27, 22, 16, 0.22);
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------- dark theme
+   A warm-charcoal world, not a cold-slate inversion: the paper-and-marigold
+   identity carried into the dark. Grounds are warm near-blacks derived from
+   the console tone; the marigold accent is nudged brighter so it still sings. */
+:root[data-theme="dark"] {
+  --paper: #17130e; /* warm near-black ground */
+  --surface: #201b15; /* cards, lifted from the ground */
+  --surface-2: #29231b; /* inset panels */
+  --ink: #f2ece2; /* warm off-white text */
+  --ink-2: #c8bfb1; /* secondary text */
+  --muted: #948a7c; /* tertiary text */
+  --line: #362d23; /* borders */
+  --line-2: #2b241c; /* faint borders */
+
+  --accent: #f0902f; /* marigold, a touch brighter for dark grounds */
+  --accent-strong: #f7a54a;
+  --accent-ink: #f6bd7f; /* accent text on dark */
+  --accent-wash: #33240f; /* dark marigold tint */
+
+  --good: #37bd86;
+  --good-wash: #12271e;
+  --info: #6aa7dc;
+  --info-wash: #142430;
+  --bad: #f07d6d;
+  --bad-wash: #2f1a16;
+
+  --console: #100d09; /* chrome, sits darker than the page */
+  --console-2: #17130e;
+  --console-ink: #f2ece2;
+  --console-muted: #a99e8d;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(0, 0, 0, 0.35);
+  --shadow: 0 8px 26px -10px rgba(0, 0, 0, 0.6), 0 2px 8px -3px rgba(0, 0, 0, 0.42);
+  --shadow-lg: 0 30px 64px -20px rgba(0, 0, 0, 0.72);
+
+  color-scheme: dark;
+}
+
+/* No-JS / no-preference fallback: honour the OS when no explicit choice is set.
+   The inline head script normally stamps an explicit data-theme before paint, so
+   this only matters when scripting is off. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --paper: #17130e;
+    --surface: #201b15;
+    --surface-2: #29231b;
+    --ink: #f2ece2;
+    --ink-2: #c8bfb1;
+    --muted: #948a7c;
+    --line: #362d23;
+    --line-2: #2b241c;
+    --accent: #f0902f;
+    --accent-strong: #f7a54a;
+    --accent-ink: #f6bd7f;
+    --accent-wash: #33240f;
+    --good: #37bd86;
+    --good-wash: #12271e;
+    --info: #6aa7dc;
+    --info-wash: #142430;
+    --bad: #f07d6d;
+    --bad-wash: #2f1a16;
+    --console: #100d09;
+    --console-2: #17130e;
+    --console-ink: #f2ece2;
+    --console-muted: #a99e8d;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45), 0 1px 1px rgba(0, 0, 0, 0.35);
+    --shadow: 0 8px 26px -10px rgba(0, 0, 0, 0.6), 0 2px 8px -3px rgba(0, 0, 0, 0.42);
+    --shadow-lg: 0 30px 64px -20px rgba(0, 0, 0, 0.72);
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line2: var(--line-2);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-wash: var(--accent-wash);
+  --color-good: var(--good);
+  --color-good-wash: var(--good-wash);
+  --color-info: var(--info);
+  --color-info-wash: var(--info-wash);
+  --color-bad: var(--bad);
+  --color-bad-wash: var(--bad-wash);
+  --color-console: var(--console);
+  --color-console-ink: var(--console-ink);
+  --color-console-muted: var(--console-muted);
+  --font-display: var(--font-schibsted), var(--font-hanken), sans-serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* -------------------------------------------------------------------- base */
+* {
+  border-color: var(--line);
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+  letter-spacing: 0.002em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+::selection {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+/* Display face: elegance comes from tight tracking + optical balance. */
+.font-display {
+  font-family: var(--font-schibsted), var(--font-hanken), sans-serif;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+/* the logo art is amber on solid black — 'lighten' drops the black onto any
+   dark ground so only the amber mark + wordmark show. */
+.logo-blend {
+  mix-blend-mode: lighten;
+}
+
+/* ---- loading splash ---- */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120% 120% at 50% 40%, #221d18 0%, #0c0a08 70%);
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.splash.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+/* Already played this session (flag set by the boot script) — don't replay. */
+:root.splash-seen .splash {
+  display: none;
+}
+.splash-logo {
+  width: min(78vw, 440px);
+  height: auto;
+  animation: logo-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.splash-track {
+  margin-top: 26px;
+  width: min(60vw, 220px);
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.splash-bar {
+  height: 100%;
+  width: 40%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: load-sweep 1.15s ease-in-out infinite;
+}
+@keyframes logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes load-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  color: var(--muted);
+}
+
+/* ------------------------------------------------------------- components */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.field {
+  width: 100%;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.58rem 0.72rem;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.field::placeholder {
+  color: var(--muted);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 32%, transparent);
+}
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04),
+    0 10px 22px -12px color-mix(in srgb, var(--accent) 75%, transparent);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-ghost {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink-2);
+}
+.btn-ghost:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+  border-color: color-mix(in srgb, var(--ink) 18%, var(--line));
+}
+
+/* console top bar with a faint engineered grid */
+.console-bar {
+  background: var(--console);
+  color: var(--console-ink);
+  background-image: linear-gradient(
+      color-mix(in srgb, #fff 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, color-mix(in srgb, #fff 4%, transparent) 1px, transparent 1px);
+  background-size: 26px 26px;
+  background-position: center;
+}
+
+.logo-tile {
+  background: linear-gradient(150deg, var(--accent), #f0a247);
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--accent) 75%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* status dot */
+.stat-dot {
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-radius: 999px;
+  flex: none;
+}
+.stat-idle {
+  background: var(--muted);
+}
+.stat-run {
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+  animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+/* AI actively working: a live green pulse */
+.stat-work {
+  background: var(--good);
+  animation: ping-good 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.stat-done {
+  background: var(--good);
+}
+.stat-err {
+  background: var(--bad);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--bad) 55%, transparent);
+  animation: ping-bad 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes ping-good {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 55%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+@keyframes ping-bad {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--bad) 55%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 6px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+/* agent telemetry stripe (left edge state) */
+.agent-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.agent-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--muted);
+}
+.agent-card.is-run::before {
+  background: var(--accent);
+}
+.agent-card.is-done::before {
+  background: var(--good);
+}
+.agent-card.is-err::before {
+  background: var(--bad);
+}
+.agent-card.is-run {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+}
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 10%, transparent),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+  }
+  70% {
+    box-shadow: 0 0 0 7px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.rise-2 {
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: 0.06s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ print */
+@media print {
+  .console-bar,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+  .card,
+  .doc {
+    box-shadow: none !important;
+    border-color: #ddd !important;
+  }
+}
